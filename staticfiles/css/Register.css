@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url("{% static '/static/img/bg.jpg' %}"); /* Use the static tag to reference the image */
+    background-size: cover;
+    background-position: center;
+}
+
+.register-container {
+    background-color: rgba(255, 255, 255, 0.9); /* White background with some transparency */
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 400px;
+    margin: 100px auto; /* Center the form */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #FFA500; /* Yellow color */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #FFA500; /* Yellow border */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #FF8C00; /* Darker yellow on focus */
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFA500; /* Yellow background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #FF8C00; /* Darker yellow on hover */
+}

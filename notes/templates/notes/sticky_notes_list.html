@@ -1,0 +1,176 @@
+
+{% block content %}
+<div class="sticky-notes-container">
+    <div class="header">
+        <h1>My Sticky Notes</h1>
+        <a href="{% url 'sticky_note_create' %}" class="create-btn">
+            <i class="fas fa-plus"></i> Create New Note
+        </a>
+    </div>
+
+    <div class="notes-grid">
+        {% for note in notes %}
+        <div class="note">
+            <div class="note-content">
+                <p>{{ note.content }}</p>
+                {% if note.attachment %}
+                <a href="{{ note.attachment.url }}" class="attachment-link">
+                    <i class="fas fa-paperclip"></i> View Attachment
+                </a>
+                {% endif %}
+            </div>
+            <div class="note-footer">
+                <small class="date">{{ note.created_at|date:"M d, Y H:i" }}</small>
+                <div class="note-actions">
+                    <a href="{% url 'sticky_note_edit' note.pk %}" class="edit-btn">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'sticky_note_delete' note.pk %}" class="delete-btn">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="empty-state">
+            <i class="fas fa-sticky-note"></i>
+            <p>No sticky notes yet. Start by creating one!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .sticky-notes-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        min-height: 100vh;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    h1 {
+        color: #333;
+        font-size: 2.5em;
+        margin: 0;
+    }
+
+    .create-btn {
+        background-color: #ffd700;
+        color: #333;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .create-btn:hover {
+        background-color: #ffed4a;
+        transform: translateY(-2px);
+    }
+
+    .notes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .note {
+        background-color: #fff7d1;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .note:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .note-content {
+        margin-bottom: 15px;
+    }
+
+    .note-content p {
+        margin: 0;
+        color: #333;
+        font-size: 1.1em;
+        line-height: 1.5;
+    }
+
+    .attachment-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #666;
+        text-decoration: none;
+    }
+
+    .note-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        padding-top: 15px;
+    }
+
+    .date {
+        color: #666;
+    }
+
+    .note-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .edit-btn, .delete-btn {
+        padding: 5px 10px;
+        border-radius: 15px;
+        text-decoration: none;
+        font-size: 0.9em;
+        transition: all 0.2s ease;
+    }
+
+    .edit-btn {
+        background-color: #ffd700;
+        color: #333;
+    }
+
+    .delete-btn {
+        background-color: #ff6b6b;
+        color: white;
+    }
+
+    .edit-btn:hover, .delete-btn:hover {
+        opacity: 0.8;
+    }
+
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 50px;
+        background-color: #fff7d1;
+        border-radius: 10px;
+    }
+
+    .empty-state i {
+        font-size: 3em;
+        color: #ffd700;
+        margin-bottom: 20px;
+    }
+
+    .empty-state p {
+        color: #666;
+        font-size: 1.2em;
+    }
+</style>
+{% endblock %}  

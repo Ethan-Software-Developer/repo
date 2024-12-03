@@ -1,0 +1,294 @@
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --bg-primary: #121212;
+        --bg-secondary: #1E1E1E;
+        --text-primary: #E0E0E0;
+        --text-secondary: #A0A0A0;
+        --accent-yellow: #FFD700;
+        --accent-dark: #FFD700;
+        --card-bg: #1E1E1E;
+        --border-color: #333333;
+        --hover-bg: #2C2C2C;
+    }
+
+    body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+    }
+
+    .profile-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        background: linear-gradient(135deg, #1E1E1E 0%, #121212 100%);
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+    }
+
+    .profile-header {
+        display: flex;
+        align-items: center;
+        padding: 2rem;
+        background: rgba(30,30,30,0.9);
+        border-bottom: 2px solid var(--accent-yellow);
+        position: relative;
+    }
+
+    .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--accent-yellow);
+        margin-right: 2rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .profile-header-info {
+        flex-grow: 1;
+    }
+
+    .profile-name {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-subtitle {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+
+    .profile-stats {
+        display: flex;
+        justify-content: space-between;
+        background: var(--bg-secondary);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .profile-stat {
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--accent-yellow);
+    }
+
+    .stat-label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+    }
+
+    .profile-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        padding: 2rem;
+        background: rgba(30,30,30,0.9);
+    }
+
+    .profile-section {
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        border: 1px solid var(--border-color);
+    }
+
+    .back-btn{
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        background-color: transparent;
+        border: 2px solid var(--accent-yellow);
+        color: var(--accent-yellow);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+
+        
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--accent-yellow);
+        border-bottom: 2px solid var(--accent-yellow);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .info-value {
+        color: var(--text-primary);
+        text-align: right;
+    }
+
+    /* Logout Button Styles */
+    .logout-btn {
+        position: absolute;
+        top: 1.5rem;
+        right: 8.5rem;
+        background-color: transparent;
+        border: 2px solid var(--accent-yellow);
+        color: var(--accent-yellow);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .logout-btn:hover {
+        background-color: var(--accent-yellow);
+        color: var(--bg-primary);
+        box-shadow: 0 5px 15px rgba(255,215,0,0.3);
+    }
+
+    .logout-btn:active {
+        transform: scale(0.95);
+    }
+
+    @media (max-width: 768px) {
+        .profile-content {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .profile-picture {
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+
+        .logout-btn {
+            position: static;
+            margin-top: 1rem;
+            align-self: center;
+        }
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-header">
+        {% if user.profile.profile_picture %}
+            <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+        {% else %}
+            <img src="/media/profile_pics/default.jpg" alt="Default Profile Picture" class="profile-picture">
+        {% endif %}
+        
+        <div class="profile-header-info">
+            <h1 class="profile-name">{{ user.first_name }} {{ user.last_name }}</h1>
+            <div class="profile-subtitle">{{ user.profile.current_major }} | {{ user.email }}</div>
+            
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="stat-value">3.75</div>
+                    <div class="stat-label">GPA</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="stat-value">15</div>
+                    <div class="stat-label">Credit Hours</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="stat-value">Junior</div>
+                    <div class="stat-label">Academic Year</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <a href="{% url 'dashboard' %}" class=" back-btn">Back</a>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-section">
+            <h2 class="section-title">Personal Information</h2>
+            <ul class="info-list">
+                <li class="info-item">
+                    <span class="info-label">Full Name</span>
+                    <span class="info-value">{{ user.first_name }} {{ user.last_name }}</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Email</span>
+                    <span class="info-value">{{ user.email }}</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Phone Number</span>
+                    <span class="info-value">{{ user.profile.phone_number|default:'Not provided' }}</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Date of Birth</span>
+                    <span class="info-value">{{ user.profile.date_of_birth|default:'Not provided' }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="profile-section">
+            <h2 class="section-title">Academic Information</h2>
+            <ul class="info-list">
+                <li class="info-item">
+                    <span class="info-label">Major</span>
+                    <span class="info-value">{{ user.profile.current_major }}</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Student ID</span>
+                    <span class="info-value">{{ user.profile.student_id }}</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Enrollment Date</span>
+                    <span class="info-value">{{ user.profile.enrollment_date|date:"F Y" }}</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Graduation Expected</span>
+                    <span class="info-value">{{ user.profile.expected_graduation|date:"F Y" }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

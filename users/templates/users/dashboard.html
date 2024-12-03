@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub 2.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ffd700;
+            --primary-light: #ffe666;
+            --secondary: #333333;
+            --accent: #ffe147;
+            --background: #fffdf7;
+            --card: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --border: #ffe666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--card);
+            padding: 1.5rem;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        .main {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--card);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .search input {
+            border: none;
+            outline: none;
+            background: none;
+            width: 200px;
+        }
+
+        .user a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            background: var(--primary-light);
+            color: var(--text);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .recent-activity {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--background);
+            border-radius: 0.5rem;
+        }
+
+        .activity-icon {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">         
+        <aside class="sidebar">             
+            <div class="logo">                 
+                <i class="fas fa-book"></i>                 
+                StudyHub             
+            </div>             
+            <nav>                 
+                <a href="{% url 'dashboard' %}" class="nav-link active">                     
+                    <i class="fas fa-chart-bar"></i>                     
+                    Dashboard                 
+                </a>                 
+                <a href="" class="nav-link">                     
+                    <i class="fas fa-sticky-note"></i>                     
+                    Sticky notes                 
+                </a>                 
+                <a href="" class="nav-link">                     
+                    <i class="fas fa-video"></i>                     
+                    Lectures                 
+                </a>                 
+                <a href="" class="nav-link">                     
+                    <i class="fas fa-robot"></i>                     
+                    Ai Assistant                 
+                </a>                             
+            </nav>         
+        </aside>
+
+        <main class="main">
+            <header class="header">
+                <div class="search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="user">
+                    <a href="{% url 'profile' %}">
+                        <i class="fas fa-user-circle fa-lg"></i>
+                    </a>
+                </div>
+            </header>
+
+            <section class="stats">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Courses</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Active Courses</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Assignments</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Pending Tasks</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Progress</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Completion Rate</div>
+                </div>
+            </section>
+
+            <section class="recent-activity">
+                <div class="activity-header">
+                    <h2>Recent Activity</h2>
+                </div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <i class="fas fa-file-alt activity-icon"></i>
+                        <div>
+                            <h4>Assignment Submitted</h4>
+                            <p>Data Structures - Week 4 Assignment</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <i class="fas fa-video activity-icon"></i>
+                        <div>
+                            <h4>Lecture Completed</h4>
+                            <p>Introduction to Machine Learning</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <i class="fas fa-certificate activity-icon"></i>
+                        <div>
+                            <h4>Quiz Passed</h4>
+                            <p>Web Development Fundamentals</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
